@@ -19,67 +19,49 @@ const IMAGES = [
   {
     id: '1',
     name: 'img01.jpg',
-    uri: 'https://www.pexels.com/photo/pink-rose-736230/',
+    url: 'https://images.pexels.com/photos/736230/pexels-photo-736230.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
   },
   {
     id: '2',
     name: 'img02.jpg',
-    uri: 'https://www.pexels.com/photo/close-up-photograph-of-flowers-931177/',
+    url: 'https://images.pexels.com/photos/931177/pexels-photo-931177.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
   },
   {
     id: '3',
     name: 'img03.jpg',
-    uri: 'https://www.pexels.com/photo/close-up-photography-of-pink-flowers-1408221/',
+    url: 'https://images.pexels.com/photos/1408221/pexels-photo-1408221.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
   },
   {
     id: '4',
     name: 'img04.jpg',
-    uri: 'https://www.pexels.com/photo/tulip-flowers-2058498/',
+    url: 'https://images.pexels.com/photos/2058498/pexels-photo-2058498.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
   },
   {
     id: '5',
     name: 'img05.jpg',
-    uri: 'https://www.pexels.com/photo/pink-petaled-flowers-closeup-photo-992734/',
+    url: 'https://images.pexels.com/photos/736230/pexels-photo-736230.jpeg',
   },
 ];
-
-const Item = ({id, name}) => {
-  const handlePress = id => {
-    const image = IMAGES.find(img => {
-      return img.id === id;
-    });
-
-    Alert.alert(`Image Name :${image.name} and Id: ${image.id}`);
-  };
-
-  return (
-    <TouchableOpacity onPress={() => handlePress(id)} style={styles.listItem}>
-      <Text style={styles.listName}>{name}</Text>
-    </TouchableOpacity>
-  );
-};
 
 const MainScreen = ({navigation}) => {
   return (
     <SafeAreaView style={styles.headerText}>
       <FlatList
         data={IMAGES}
-        renderItem={({item}) => <Item id={item.id} name={item.name} />}
+        renderItem={({item}) => (
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate('ImageScreen', {
+                name: item.name,
+                url: item.url,
+              })
+            }
+            style={styles.listItem}>
+            <Text style={styles.listName}>{item.name}</Text>
+          </TouchableOpacity>
+        )}
         keyExtractor={item => item.id}
       />
-      <TouchableOpacity
-        onPress={() => navigation.navigate('ImageScreen')}
-        style={{
-          backgroundColor: '#AD40AF',
-          padding: 20,
-          width: '90%',
-          borderRadius: 5,
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          marginBottom: 50,
-        }}>
-        <Text>Move To Image Screen</Text>
-      </TouchableOpacity>
     </SafeAreaView>
   );
 };
